@@ -100,5 +100,14 @@
   <ItemGroup>
     <None Include="Resources\cartesian.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SegundoGrauFormula.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cos.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sen.jpeg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
