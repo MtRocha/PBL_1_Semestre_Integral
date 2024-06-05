@@ -35,8 +35,8 @@ namespace PBL_1_Semestre_Integral
             int height = pictureBox1.Height;
 
             // Calcula o centro do PictureBox
-            int centerX = width / 2;
-            int centerY = height / 2;
+            int centerX = width / 8;
+            int centerY = height - height / 8;
 
             // Desenha os eixos X e Y
             Pen axisPen = new Pen(Color.Black, 2);
@@ -61,43 +61,26 @@ namespace PBL_1_Semestre_Integral
             {
                 g.DrawLine(gridPen, new Point(0, y), new Point(width, y));
             }
-
-            // Desenha uma curva (por exemplo, uma parábola)
-            Pen curvePen = new Pen(Color.Red, 2);
-            for (int x = -centerX; x < centerX; x++)
-            {
-                // y = (x / 20)^2 para desenhar uma parábola
-                int screenX = centerX + x;
-                int screenY = centerY - (x * x) / 400;
-
-                // Desenhe o ponto (ou linha entre pontos)
-                g.DrawRectangle(curvePen, screenX, screenY, 1, 1);
-            }
         }
 
         private void Calcular_Click(object sender, EventArgs e)
         {
-            pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.DesenhaFuncaoSegundoGrau);
-            this.Controls.Add(pictureBox1);
-            
-
-
-
-
+            pictureBox1.Refresh();
+            DesenhaFuncaoSegundoGrau();
         }
 
-        public void DesenhaFuncaoSegundoGrau(object sender, PaintEventArgs e)
+        public void DesenhaFuncaoSegundoGrau()
         {
-           
-            Graphics g = e.Graphics;
+
+            Graphics g = pictureBox1.CreateGraphics();
 
             // Obtem as dimensões do PictureBox
             int width = pictureBox1.Width;
             int height = pictureBox1.Height;
 
             // Calcula o centro do PictureBox
-            int centerX = width / 2;
-            int centerY = height / 2;
+            int centerX = width / 8;
+            float centerY = height - height / 8;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             Pen curvePen = new Pen(Color.Red, 2);
 
@@ -105,21 +88,26 @@ namespace PBL_1_Semestre_Integral
             double cofB = double.Parse(CoeficienteSegundGrau2.Text);
             double cofC = double.Parse(CoeficienteSegundGrau3.Text);
 
-            for (int x = -centerX; x < centerX; x++)
+            for (int x = centerX; x < 90; x++)
             {
-                // y = (x / 20)^2 para desenhar uma parábola
                 int screenX = centerX + x;
-                int screenY = centerY - (x * x) / 400;
+                float screenY = height - ((float)Calculo.FuncaoSegundoGrau(screenX, cofC, cofB, cofC) / 60);
 
-
+                if (screenY < 0 )
+                {
+                    screenY += height - ((screenY * -1)*2);
+                }
 
                 // Desenhe o ponto (ou linha entre pontos)
-                g.DrawRectangle(curvePen, screenX, (float)Calculo.FuncaoSegundoGrau(screenX, cofC, cofB, cofC), 1, 1);
+                g.DrawRectangle(curvePen, screenX, screenY, 3, 3);
+
             }
-            
-
-
         }
 
+        private void OpcaoDeCalculo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+
